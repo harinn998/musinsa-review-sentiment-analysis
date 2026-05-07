@@ -15,19 +15,34 @@ venv/
 .DS_Store
 Thumbs.db
 
-# VSCode
+# IDE
 .vscode/
+.idea/
 
-# Data (don’t upload large/private data)
-data/
-1data/
-*.csv
+# 민감 정보
+.env
+*-credentials.json
 
-# Logs / outputs
-*.log
-outputs/
+# 임베딩/모델 (너무 커서 git 부담)
+*.npy
 models/
 
+# 로그/잡동사니
+*.log
 .history/
-
+1data/
 0/
+outputs/
+
+# 모든 csv 무시 (팀원 각자 작업 csv 차단)
+*.csv
+
+# 단, data_ghactions/ 폴더 안의 csv는 예외
+!data_ghactions/*.csv
+!data_ghactions/**/*.csv
+
+# 임시 raw 파일은 명시적으로 무시
+data_ghactions/new_raw_*.csv.gz
+
+# 로컬 변환용 (있다면)
+data_ghactions/cleaned_reviews.csv
