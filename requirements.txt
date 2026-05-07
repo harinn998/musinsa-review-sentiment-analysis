@@ -1,0 +1,8 @@
+# 1단계: 크롤링
+requests>=2.31
+pandas>=2.0
+
+# 텍스트 전처리 + 중복 제거 + parquet 출력
+emoji>=2.10
+scikit-learn>=1.3
+pyarrow>=14.0
