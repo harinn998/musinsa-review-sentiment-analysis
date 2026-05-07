@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     #- cron: '0 18 * * 0'   # 매주 일요일 18:00 UTC = 한국 월요일 새벽 3:00
-    - cron: '0 3 * * 4'    # [검증용] 매주 목요일 03:00 UTC = 한국 목요일 12:00
+    - cron: '30 17 * * *'   # 매일 17:30 UTC = 매일 KST 02:30
 
 jobs:
   run-pipeline:
