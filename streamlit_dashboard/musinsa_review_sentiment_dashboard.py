@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -29,7 +30,8 @@ BRANDS          = ["전체", "제멋", "트래블", "필루미네이트"]
 # ── 데이터 로드 ───────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_parquet("tableau_aspects.parquet")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    df = pd.read_parquet(os.path.join(base_dir, "tableau_aspects.parquet"))
     df["작성일"] = pd.to_datetime(df["작성일"], errors="coerce")
     return df
 
