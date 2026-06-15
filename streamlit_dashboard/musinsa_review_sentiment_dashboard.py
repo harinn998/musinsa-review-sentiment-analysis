@@ -29,7 +29,7 @@ BRANDS          = ["전체", "제멋", "트래블", "필루미네이트"]
 # ── 데이터 로드 ───────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_parquet("tableau_aspects_0615.parquet")
+    df = pd.read_parquet("tableau_aspects.parquet")
     df["작성일"] = pd.to_datetime(df["작성일"], errors="coerce")
     return df
 
