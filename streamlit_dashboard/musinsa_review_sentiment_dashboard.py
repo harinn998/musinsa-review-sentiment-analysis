@@ -31,7 +31,7 @@ BRANDS          = ["전체", "제멋", "트래블", "필루미네이트"]
 @st.cache_data
 def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    df = pd.read_parquet(os.path.join(base_dir, "tableau_aspects.parquet"))
+    df = pd.read_parquet(os.path.join(base_dir, "tableau_aspects_slim.parquet"))
     df["작성일"] = pd.to_datetime(df["작성일"], errors="coerce")
     return df
 
