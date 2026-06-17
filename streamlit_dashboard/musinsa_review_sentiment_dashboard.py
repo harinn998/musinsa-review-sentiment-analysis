@@ -112,7 +112,7 @@ def sample_viewer(df, key_suffix=""):
 
 
 # ── 헤더 ──────────────────────────────────────────────────────
-st.markdown("## 👗 무신사 독점 브랜드 리뷰 감성 분석")
+st.markdown("## 👗 무신사 브랜드 리뷰 감성 분석")
 st.markdown("KcELECTRA 기반 ABSA — 제멋 · 트래블 · 필루미네이트")
 st.divider()
 
@@ -232,4 +232,4 @@ else:
         sample_viewer(filtered, key_suffix=f"_{brand_filter}")
 
 st.divider()
-st.caption("📊 무신사 독점 브랜드 리뷰 감성 분석 | KcELECTRA 기반 ABSA")
+st.caption("📊 무신사 브랜드 리뷰 감성 분석 | KcELECTRA 기반 ABSA")
