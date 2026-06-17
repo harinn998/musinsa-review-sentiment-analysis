@@ -1,4 +1,5 @@
 import os
+import datetime
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -32,10 +33,14 @@ BRANDS          = ["전체", "제멋", "트래블", "필루미네이트"]
 def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     df = pd.read_parquet(os.path.join(base_dir, "tableau_aspects.parquet"))
+    df["작성일"] = pd.to_datetime(df["작성일"])
     return df
 
 df_all = load_data()
 df_classified = df_all[df_all["topic_category"] != "아웃라이어"]
+
+DATE_MIN = df_classified["작성일"].min().date()
+DATE_MAX = df_classified["작성일"].max().date()
 CATEGORIES = sorted(df_classified["topic_category"].dropna().unique())
 
 # ── 공통 함수 ─────────────────────────────────────────────────
@@ -119,6 +124,20 @@ st.divider()
 # ── 사이드바 ──────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### 🔧 필터")
+
+    default_start = max(DATE_MIN, DATE_MAX - datetime.timedelta(days=6))
+    date_range = st.date_input(
+        "기간",
+        value=(default_start, DATE_MAX),
+        min_value=DATE_MIN,
+        max_value=DATE_MAX,
+        format="YYYY-MM-DD",
+    )
+    if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
+        date_start, date_end = date_range
+    else:
+        date_start, date_end = DATE_MIN, DATE_MAX
+
     brand_filter = st.selectbox("브랜드", options=BRANDS)
     sentiment_filter = st.multiselect(
         "감성 유형",
@@ -133,9 +152,13 @@ with st.sidebar:
     st.markdown("---")
     st.caption(f"총 문장 수: {len(df_all):,}개")
     st.caption(f"분류된 문장: {len(df_classified):,}개")
+    st.caption(f"데이터 범위: {DATE_MIN} ~ {DATE_MAX}")
 
 # ── 필터 적용 ─────────────────────────────────────────────────
-filtered = df_classified.copy()
+filtered = df_classified[
+    (df_classified["작성일"].dt.date >= date_start) &
+    (df_classified["작성일"].dt.date <= date_end)
+].copy()
 if brand_filter != "전체":
     filtered = filtered[filtered["브랜드"] == brand_filter]
 if sentiment_filter:
