@@ -33,7 +33,7 @@ BRANDS          = ["전체", "제멋", "트래블", "필루미네이트"]
 def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     df = pd.read_parquet(os.path.join(base_dir, "tableau_aspects.parquet"))
-    df["작성일"] = pd.to_datetime(df["작성일"])
+    df["작성일"] = pd.to_datetime(df["작성일"]).dt.date
     return df
 
 df_all = load_data()
@@ -156,8 +156,8 @@ with st.sidebar:
 
 # ── 필터 적용 ─────────────────────────────────────────────────
 filtered = df_classified[
-    (df_classified["작성일"].dt.date >= date_start) &
-    (df_classified["작성일"].dt.date <= date_end)
+    (df_classified["작성일"] >= date_start) &
+    (df_classified["작성일"] <= date_end)
 ].copy()
 if brand_filter != "전체":
     filtered = filtered[filtered["브랜드"] == brand_filter]
