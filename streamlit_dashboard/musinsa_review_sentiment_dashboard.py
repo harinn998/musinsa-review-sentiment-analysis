@@ -39,8 +39,8 @@ def load_data():
 df_all = load_data()
 df_classified = df_all[df_all["topic_category"] != "아웃라이어"]
 
-DATE_MIN = df_classified["작성일"].min().date()
-DATE_MAX = df_classified["작성일"].max().date()
+DATE_MIN = df_classified["작성일"].min()
+DATE_MAX = df_classified["작성일"].max()
 CATEGORIES = sorted(df_classified["topic_category"].dropna().unique())
 
 # ── 공통 함수 ─────────────────────────────────────────────────
